@@ -18,8 +18,50 @@
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <!--
+    <!-- 声明
+        可以在其他地方引用 ${name}
+    -->
+    <properties>
+        <jackson.version>2.16.0</jackson.version>
+    </properties>
 
+    <!-- 依赖
+        dependencies: 项目依赖信息的集合
+        dependency: 依赖项
+        属性 g a v
+        scope: 可选属性 引入依赖作用域 默认为 compile
+
+        如何得知第三依赖的信息？
+        1. https://mvnrepository.com
+        2. 插件 maven-search 菜单栏(Tools/Maven Search)
+
+        依赖传递: 导入依赖会自动导入依赖的依赖 避免依赖的版本冲突
+        依赖冲突: 发现已经存在重复依赖 停止依赖传递
+        > 优先选择引用路径短的冲突依赖，若一致，则优先选择最先导入的依赖。
+            例如 A(1.1) -> B(1, 1) -> C(1, 1) 与 D(2, 2) -> B(2, 2)
+            结果为 A(1, 1) B(2, 2) D(2, 2) 停止依赖传递，则不导入 C(1, 1)
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+
+    <!-- Maven 构建命令
+        mvn clean - - 清理编译或打包过的项目结构，删除 target 目录
+        mvn compile - - 编译项目，生成 target 目录
+        mvn test - - 执行测试源码
+        mvn site - - 生成一个项目依赖信息的展示界面
+        mvn package - - 打包项目，生成 war/jar 文件
+        mvn install - - 打包后上传到 maven 本地仓库
+        mvn deploy - - 只打包，上传到 maven 私服仓库
+
+        触发周期后的命令会自动执行这个周期前的命令 可以直接 mvn clean package 实现清理与打包
+        mvn clean package - - 打包
+        mvn clean compile - - 编译
+        mvn clean install - - 部署到本地仓库
     -->
 
 </project>
