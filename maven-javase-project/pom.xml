@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 属性 g a v p
+        GroupId: com.(company).(business_line)[.sub_business_line]
+        ArtifactId: (product_line)-(module_name)
+        Version: (major_version).(minor_version).(revision_version)
+        Packaging:
+            jar: 普通 Java 工程
+            war: Java Web 工程
+            pom: 不打包，做继承的父工程
+    -->
+    <groupId>org.xueyinhu.ssm</groupId>
+    <artifactId>maven-javase-project</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <!--
+
+    -->
+
+</project>
