@@ -16,7 +16,11 @@
     <groupId>org.xueyinhu.ssm</groupId>
     <artifactId>maven-javase-project</artifactId>
     <version>1.0.0</version>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
+    <modules>
+        <module>project-01</module>
+        <module>project-02</module>
+    </modules>
 
     <!-- 声明
         可以在其他地方引用 ${name}
@@ -63,5 +67,16 @@
         mvn clean compile - - 编译
         mvn clean install - - 部署到本地仓库
     -->
+
+    <!-- 配置构建过程中使用的插件，避免不兼容问题 -->
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                -->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+
+    <!-- to project-01/pom.xml -->
 
 </project>
