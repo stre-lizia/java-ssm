@@ -5,11 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.xueyinhu.ssm</groupId>
-        <artifactId>maven-javase-project</artifactId>
+        <artifactId>maven-project-example</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>project-02</artifactId>
+    <artifactId>common-service</artifactId>
+    <version>1.0.1</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

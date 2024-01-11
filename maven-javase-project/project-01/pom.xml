@@ -11,8 +11,14 @@
         <version>1.0.0</version>
     </parent>
     <!-- 子工程的 gv 属性 -->
-    <groupId>org.example</groupId>
     <artifactId>project-01</artifactId>
 
+    <!-- 继承父工程声明的依赖，版本号进行继承 -->
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
