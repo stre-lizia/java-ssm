@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 无参数构造函数
+        要求当前组件类必须包含无参构造函数
+        若将一个组件类声明两个组件信息，默认是【单例模式】，会实例化两个组件对象
+    -->
+    <bean id="pc" class="org.xueyinhu.ssm.xml.ParameterlessConstruction"/>
+
+    <!-- 静态工厂类
+        factory-method="createInstance"
+    -->
+    <bean id="sf" class="org.xueyinhu.ssm.xml.StaticFactory" factory-method="createInstance"/>
+
+    <!-- 非静态工厂类
+        1. 配置工厂类的组件信息
+        2. 通过指定非静态工厂对象和方法名，来配置生成的 IOC 信息
+    -->
+    <bean id="ns" class="org.xueyinhu.ssm.xml.NonStaticFactory"/>
+    <bean id="hp" factory-bean="ns" factory-method="createHelperInstance"/>
+
+</beans>
