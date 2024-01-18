@@ -22,4 +22,21 @@
     <bean id="ns" class="org.xueyinhu.ssm.xml.NonStaticFactory"/>
     <bean id="hp" factory-bean="ns" factory-method="createHelperInstance"/>
 
+    <!-- DI
+        引用和被引用的组件，必须全部在 IOC 容器
+        1. 单个构造函数参数注入
+            <constructor-arg value=""[ ref=""]/>
+                value 属性 直接赋值
+                ref 属性 引用的 bean id
+            SpringIOC 是一个高级容器，内部会有缓存操作，先创建对象再进行属性赋值
+        2. 多个构造函数参数注入
+            使用对应数量的 constructor-arg 标签 <constructor-arg name=""[ index=""] value=""[ ref=""]/>
+                若不使用 name 或 index 属性，按照构造函数参数的顺序排列
+                或者乱序注入，但是要指定 name 属性（构造函数参数名）或 index 属性（该参数在构造函数参数列表中的位置）
+    -->
+    <bean id="ud" class="org.xueyinhu.ssm.xml.di.UserDao"/>
+    <bean id="us" class="org.xueyinhu.ssm.xml.di.UserService">
+        <constructor-arg ref="ud"/>
+    </bean>
+
 </beans>
