@@ -30,13 +30,26 @@
                 ref 属性 引用的 bean id
             SpringIOC 是一个高级容器，内部会有缓存操作，先创建对象再进行属性赋值
         2. 多个构造函数参数注入
-            使用对应数量的 constructor-arg 标签 <constructor-arg name=""[ index=""] value=""[ ref=""]/>
+            使用对应数量的 constructor-arg 标签
+            <constructor-arg name=""[ index=""] value=""[ ref=""]/>
+            <constructor-arg name=""[ index=""] value=""[ ref=""]/>
+            ......
+            <constructor-arg name=""[ index=""] value=""[ ref=""]/>
                 若不使用 name 或 index 属性，按照构造函数参数的顺序排列
                 或者乱序注入，但是要指定 name 属性（构造函数参数名）或 index 属性（该参数在构造函数参数列表中的位置）
+        3. 触发 setter 方法注入
+            <property name="" ref=""[ value=""]/>
+                name -> setter 方法的值 -> ( setter function name = setMovieFinder -> property.name = movieFinder )
+                value 属性 直接赋值
+                ref 属性 引用的 bean id
     -->
     <bean id="ud" class="org.xueyinhu.ssm.xml.di.UserDao"/>
     <bean id="us" class="org.xueyinhu.ssm.xml.di.UserService">
         <constructor-arg ref="ud"/>
     </bean>
-
+    <bean id="mf" class="org.xueyinhu.ssm.xml.di.MovieFinder"/>
+    <bean id="si" class="org.xueyinhu.ssm.xml.di.SimpleMovieLister">
+        <property name="movieName" value="电影名称"/>
+        <property name="movieFinder" ref="movieFinder"/>
+    </bean>
 </beans>
