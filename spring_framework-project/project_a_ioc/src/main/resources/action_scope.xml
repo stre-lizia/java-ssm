@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 组件作用域设置
+        bean 标签声明 Bean，只是将 Bean 的信息配置给 SpringIoc 容器
+        在 IoC 容器中，这些 bean 标签对应的信息转成 Spring 内部的 BeanDefinition 对象
+        这意味着，其与类概念一样，SpringIoC 容器可以根据 BeanDefinition 对象反射创建多个 Bean 对象实例
+        具体创建多少个 Bean 的实例对象，由 Bean 的作用域 Scope 属性指定
+
+        singleton 单实例 -> 在 IoC 容器初始化时创建 为默认值
+        prototype 多实例 -> 在 IoC 容器获取 bean 时创建对象
+        若在 WebApplicationContext 环境下还有两个作用域：
+            request 请求范围内有效的实例 -> 每次请求时创建对象
+            session 会话范围内有效的实例 -> 每次会话时创建对象
+    -->
+    <bean id="as1" class="org.xueyinhu.ssm.xml.action_scope.BeanActionScope1"/>
+    <bean id="as2" class="org.xueyinhu.ssm.xml.action_scope.BeanActionScope2" scope="prototype"/>
+
+</beans>

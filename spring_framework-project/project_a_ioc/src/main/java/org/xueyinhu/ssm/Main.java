@@ -5,6 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xueyinhu.ssm.xml.A;
 import org.xueyinhu.ssm.xml.ParameterlessConstruction;
+import org.xueyinhu.ssm.xml.action_scope.BeanActionScope1;
+import org.xueyinhu.ssm.xml.action_scope.BeanActionScope2;
 
 public class Main {
     public static void main(String[] args) {
@@ -46,5 +48,31 @@ public class Main {
         pc2.say();
         pc3.say();
         pc4.say();
+    }
+
+    // 组件生命周期
+    @Test
+    public void testLifeCycle() {
+
+        // 创建 ioc 容器，自动对 BeanLifeCycle 组件进行实例化，触发 BeanLifeCycle.init 回调方法
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("lifecycle.xml");
+
+        // 结束 ioc 容器，自动对 BeanLifeCycle 组件进行销毁，触发 BeanLifeCycle.clear 回调方法
+        context.close();
+    }
+
+    // 组件作用域
+    @Test
+    public void testActionScope() {
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("action_scope.xml");
+        // 默认为单实例
+        BeanActionScope1 b1 = context.getBean(BeanActionScope1.class);
+        BeanActionScope1 b2 = context.getBean(BeanActionScope1.class);
+        System.out.println(b1 == b2);
+        // 修改为多实例
+        BeanActionScope2 b3 = context.getBean(BeanActionScope2.class);
+        BeanActionScope2 b4 = context.getBean(BeanActionScope2.class);
+        System.out.println(b3 == b4);
     }
 }
