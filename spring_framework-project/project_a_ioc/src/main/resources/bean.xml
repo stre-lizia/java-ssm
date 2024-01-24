@@ -10,18 +10,18 @@
         要求当前组件类必须包含无参构造函数
         若将一个组件类声明两个组件信息，默认是【单例模式】，会实例化两个组件对象
     -->
-    <bean id="pc" class="org.xueyinhu.ssm.xml.ParameterlessConstruction"/>
+    <bean id="pc" class="org.xueyinhu.ssm.xml.ioc.ParameterlessConstruction"/>
 
     <!-- 静态工厂类
         factory-method="createInstance"
     -->
-    <bean id="sf" class="org.xueyinhu.ssm.xml.StaticFactory" factory-method="createInstance"/>
+    <bean id="sf" class="org.xueyinhu.ssm.xml.ioc.StaticFactory" factory-method="createInstance"/>
 
     <!-- 非静态工厂类
         1. 配置工厂类的组件信息
         2. 通过指定非静态工厂对象和方法名，来配置生成的 IOC 信息
     -->
-    <bean id="ns" class="org.xueyinhu.ssm.xml.NonStaticFactory"/>
+    <bean id="ns" class="org.xueyinhu.ssm.xml.ioc.NonStaticFactory"/>
     <bean id="hp" factory-bean="ns" factory-method="createHelperInstance"/>
 
     <!-- DI
@@ -45,12 +45,12 @@
                 value 属性 直接赋值
                 ref 属性 引用的 bean id
     -->
-    <bean id="ud" class="org.xueyinhu.ssm.xml.di.UserDao"/>
-    <bean id="us" class="org.xueyinhu.ssm.xml.di.UserService">
+    <bean id="ud" class="org.xueyinhu.ssm.xml.ioc.di.UserDao"/>
+    <bean id="us" class="org.xueyinhu.ssm.xml.ioc.di.UserService">
         <constructor-arg ref="ud"/>
     </bean>
-    <bean id="mf" class="org.xueyinhu.ssm.xml.di.MovieFinder"/>
-    <bean id="si" class="org.xueyinhu.ssm.xml.di.SimpleMovieLister">
+    <bean id="mf" class="org.xueyinhu.ssm.xml.ioc.di.MovieFinder"/>
+    <bean id="si" class="org.xueyinhu.ssm.xml.ioc.di.SimpleMovieLister">
         <property name="movieName" value="电影名称"/>
         <property name="movieFinder" ref="mf"/>
     </bean>

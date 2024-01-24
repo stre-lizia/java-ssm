@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="jb" class="org.xueyinhu.ssm.xml.factory_bean.JavaBeanFactoryBean">
+        <!-- 此位置的 property 属性不是 JavaBean 的工厂类配置，而需要在 JavaBeanFactoryBean 类中添加相应的 setter 方法 -->
+        <property name="value" value="XhangSan"/>
+    </bean>
+
+</beans>

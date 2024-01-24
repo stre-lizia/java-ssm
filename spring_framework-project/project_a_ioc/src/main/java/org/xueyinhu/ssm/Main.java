@@ -3,8 +3,9 @@ package org.xueyinhu.ssm;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.xueyinhu.ssm.xml.A;
-import org.xueyinhu.ssm.xml.ParameterlessConstruction;
+import org.xueyinhu.ssm.xml.factory_bean.JavaBean;
+import org.xueyinhu.ssm.xml.ioc.A;
+import org.xueyinhu.ssm.xml.ioc.ParameterlessConstruction;
 import org.xueyinhu.ssm.xml.action_scope.BeanActionScope1;
 import org.xueyinhu.ssm.xml.action_scope.BeanActionScope2;
 
@@ -74,5 +75,22 @@ public class Main {
         BeanActionScope2 b3 = context.getBean(BeanActionScope2.class);
         BeanActionScope2 b4 = context.getBean(BeanActionScope2.class);
         System.out.println(b3 == b4);
+    }
+
+    /** FactoryBean 接口是 SpringIoC 容器实例化逻辑的可插拔性点，用于配置复杂的 Bean 对象
+     * functions:
+     *  T getObject() 返回此工厂创建的对象的实例，该返回值会被存储到 IoC 容器
+     *  boolean isSingleton() 返回是否为单例模式
+     *  Class<?> getObjectType() 返回 getObject() 方法返回的对象类型，如果不知道类型，则返回 null
+     */
+    @Test
+    public void testFactoryBean() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("factory_bean.xml");
+        JavaBean jb = context.getBean(JavaBean.class);
+        // todo FactoryBean 工厂也会加入到 ioc 容器，名字：&id
+        Object jb_fb = context.getBean("&jb");
+        System.out.println("JavaBean: " + jb);
+        System.out.println("JavaBeanFactoryBean: " + jb_fb);
+        context.close();
     }
 }

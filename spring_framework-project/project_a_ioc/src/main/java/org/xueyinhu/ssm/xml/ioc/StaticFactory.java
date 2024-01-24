@@ -1,4 +1,4 @@
-package org.xueyinhu.ssm.xml;
+package org.xueyinhu.ssm.xml.ioc;
 
 public class StaticFactory {
     private static  StaticFactory sf = new StaticFactory();

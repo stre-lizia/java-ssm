@@ -1,4 +1,4 @@
-package org.xueyinhu.ssm.xml.di;
+package org.xueyinhu.ssm.xml.ioc.di;
 
 public class UserService {
     private UserDao userDao;

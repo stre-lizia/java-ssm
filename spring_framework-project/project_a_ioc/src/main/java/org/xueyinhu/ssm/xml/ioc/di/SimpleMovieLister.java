@@ -1,4 +1,4 @@
-package org.xueyinhu.ssm.xml.di;
+package org.xueyinhu.ssm.xml.ioc.di;
 
 public class SimpleMovieLister {
     private MovieFinder movieFinder;
