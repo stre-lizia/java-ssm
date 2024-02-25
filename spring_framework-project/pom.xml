@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>project_a_ioc</module>
+        <module>project_a_ioc_example</module>
     </modules>
 
     <dependencies>
