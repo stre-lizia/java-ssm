@@ -28,7 +28,7 @@
     <bean id="StudentDao" class="org.xueyinhu.ssm.dao.impl.StudentDaoImpl">
         <property name="jt" ref="jdbcTemplate"/>
     </bean>
-    <bean id="StudentService" class="org.xueyinhu.ssm.service.impl.StudentServiceImpl">
+    <bean id="StudentService" class="org.xueyinhu.ssm.sevice.impl.StudentServiceImpl">
         <property name="sd" ref="StudentDao"/>
     </bean>
     <bean id="StudentController" class="org.xueyinhu.ssm.controller.StudentController">

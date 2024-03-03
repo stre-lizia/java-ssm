@@ -1,5 +1,12 @@
 package org.xueyinhu.ssm;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.xueyinhu.ssm.sevice.Calculator;
+import org.xueyinhu.ssm.sevice.impl.CalculatorPureImpl;
+
+import java.util.stream.Stream;
+
 /** AOP 面向切片编程是一种范式，通过将通用的横切关注点（日志、事务、权限控制等）与业务逻辑分离，使得代码更加清晰、简洁、易于维护。
  * 场景：
  *  日志记录 在方法执行前后或者抛出异常时进行日志的记录
@@ -11,9 +18,19 @@ package org.xueyinhu.ssm;
  *  动态代理 可以代理某个类的所有方法，用于实现各种功能
  * 通知织入位置：
  *  前置通知、返回通知、异常通知，后置通知、环绕通知
+ * ---
+ * Spring 基于注解的 AOP
+ *  AspectJ 注解层 -> 具体实现层（有接口使用动态代理，无接口使用 cglib）
  */
 public class Main {
+
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        ApplicationContext context = new AnnotationConfigApplicationContext(CConfigs.class);
+//        String[] beanDefinitionNames = context.getBeanDefinitionNames();
+//        Stream.of(beanDefinitionNames).forEach(System.out::println);
+        Calculator calculator = context.getBean(Calculator.class);
+        System.out.println(calculator.add(2, 3));
     }
 }
