@@ -1,8 +1,8 @@
-package org.xueyinhu.ssm.sevice.impl;
+package org.xueyinhu.ssm.service.impl;
 
 import org.xueyinhu.ssm.Student;
 import org.xueyinhu.ssm.dao.StudentDao;
-import org.xueyinhu.ssm.sevice.StudentService;
+import org.xueyinhu.ssm.service.StudentService;
 
 import java.util.List;
 

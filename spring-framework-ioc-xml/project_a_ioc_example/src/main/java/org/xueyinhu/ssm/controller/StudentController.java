@@ -1,6 +1,6 @@
 package org.xueyinhu.ssm.controller;
 
-import org.xueyinhu.ssm.sevice.StudentService;
+import org.xueyinhu.ssm.service.StudentService;
 
 public class StudentController {
 

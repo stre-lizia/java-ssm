@@ -2,6 +2,7 @@ package org.xueyinhu.ssm.advice;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Modifier;
@@ -17,6 +18,9 @@ import java.util.Arrays;
  */
 @Component
 @Aspect
+// 来处理多个增强方法优先级的问题，@Order(value) 其中 value 默认为 int 最大值
+// value 越小则优先级越高，越先执行
+@Order(value = 1)
 public class MyAdvice {
     @Before("execution(* org..impl.*.*(..))")
     public void before(JoinPoint joinPoint) {

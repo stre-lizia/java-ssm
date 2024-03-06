@@ -1,4 +1,4 @@
-package org.xueyinhu.ssm.sevice;
+package org.xueyinhu.ssm.service;
 
 import org.xueyinhu.ssm.Student;
 
