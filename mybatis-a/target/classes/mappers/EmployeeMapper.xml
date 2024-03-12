@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 指向 mapper.xml 所对应的 Mapper 接口-->
+<mapper namespace="org.xueyinhu.ssm.mapper.EmployeeMapper">
+    <!-- 每个标签对应接口的一个方法，该方法不能进行重载 -->
+    <select id="queryById" resultType="org.xueyinhu.ssm.pojo.Employee">
+        select emp_id id,emp_name name,emp_salary salary from t_emp where emp_id=#{id}
+    </select>
+</mapper>

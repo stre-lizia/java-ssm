@@ -1,5 +1,15 @@
 package org.xueyinhu.ssm;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.xueyinhu.ssm.mapper.EmployeeMapper;
+import org.xueyinhu.ssm.pojo.Employee;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 /** MyBatis
  * 持久化框架对比：
  *  JDBC：
@@ -17,7 +27,28 @@ package org.xueyinhu.ssm;
  *      开发效率逊于 Hibernate，但是完全能够接受
  */
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+    /** mybatis
+     * 1. 读取外部配置文件 mybatis-config.xml
+     * 2. 创建 SqlSessionFactory 对象
+     * 3. 创建 SqlSession，每次业务创建一个，用完释放
+     * 4. 获取接口的代理对象，就会查找 mapper 接口的方法
+     * 5。 提交事务（非DQL）和释放资源
+     */
+    public static void main(String[] args) throws IOException {
+
+        String mybatisConfigFilePath = "mybatis-config.xml";
+        InputStream inputStream = Resources.getResourceAsStream(mybatisConfigFilePath);
+
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+
+        SqlSession session = sqlSessionFactory.openSession();
+
+        EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+        System.out.println(mapper.queryById(1).getName());
+
+        // 查询事务不需要提交
+        // session.commit();
+        session.close();
     }
 }

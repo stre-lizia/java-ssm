@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 设置，此处开启日志功能，选择控制台输出 -->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!-- environments
+        表示配置 Mybatis 的开发环境，可以配置多个环境，使用 default 属性指定运行时使用的环境
+     -->
+    <environments default="development">
+        <!-- 一个具体环境 -->
+        <environment id="development">
+            <!-- Mybatis 的内置事务管理器
+                transactionManager 事务管理器
+                    MANAGED 几乎不做什么
+                    JDBC 自动开启事务，实现了提交和回滚功能
+                dataSource 数据源
+                    UNPOOLED 不使用连接池，每次新建与释放链接
+                    POOLED 使用连接池
+             -->
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/studb?serverTimezone=UTC"/>
+                <property name="username" value="root"/>
+                <property name="password" value="password"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 需要扫描的 mapper.xml 路径 -->
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+    </mappers>
+</configuration>

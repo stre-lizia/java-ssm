@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 指向 mapper.xml 所对应的 Mapper 接口-->
+<mapper namespace="org.xueyinhu.ssm.mapper.EmployeeMapper">
+    <!-- 每个标签对应接口的一个方法，该方法不能进行重载
+        对于参数的传递：
+            #{ key } 占位符 + 赋值，这种推荐使用，防止注入攻击，但是不能替代关键字、容器名与列名。
+            ${ key } 字符串拼接，若列名为动态的则使用这种方式
+        传入参数可分为两种：
+            简单类型：基本数据类型，基本数据类型的包装类型，字符串类型
+                单个值传入的情景下，key 的名字可以随便取，都可以取到
+                todo 零散值传入的情景下，key 的名字和属性名称一致也取不到信息，必须注解 (@Param) 指定 key 或利用 mybatis 的默认机制
+                    @Param(keyName)
+                        List<Employee> queryByNameAndSalary(@Param("A") String name, @Param("bb") Double salary);
+                    按照顺序：
+                        select emp_id id, emp_name name, emp_salary salary from t_emp where emp_name = #{arg0} and emp_salary = #{arg1}
+                        select emp_id id, emp_name name, emp_salary salary from t_emp where emp_name = #{param1} and emp_salary = #{param2}
+            复杂类型：实体类类型，集合类型，数组类型
+                若传入单个实体类类型，在传值的位置直接使用属性名作为 key
+                若传入 Map，则指定 key 为 Map 的 key
+     -->
+
+    <!-- 单个简单数据传入获取员工信息 -->
+    <select id="queryById" resultType="org.xueyinhu.ssm.pojo.Employee">
+        select emp_id id,emp_name name,emp_salary salary from t_emp where emp_id=#{id}
+    </select>
+
+    <!-- 传入实体类对数据表进行添加 -->
+    <!-- 返回值类型不需要指定，默认为 int -->
+    <insert id="insertEmp">
+        insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
+    </insert>
+
+    <!-- 零散简单数据传入获取员工信息 -->
+    <!-- 返回值类型为实体类列表，但是 resultType 依然指定为实体类类型 -->
+    <select id="queryNameAndSalary" resultType="org.xueyinhu.ssm.pojo.Employee">
+        select emp_id id, emp_name name, emp_salary salary from t_emp where emp_name = #{A} and emp_salary = #{bb}
+    </select>
+
+    <!-- 传入 Map 对数据表进行添加 -->
+    <insert id="insertEmpFromMap">
+        insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
+    </insert>
+</mapper>
