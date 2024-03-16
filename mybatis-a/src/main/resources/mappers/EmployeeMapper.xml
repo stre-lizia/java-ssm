@@ -7,6 +7,17 @@
         对于参数的传递：
             #{ key } 占位符 + 赋值，这种推荐使用，防止注入攻击，但是不能替代关键字、容器名与列名。
             ${ key } 字符串拼接，若列名为动态的则使用这种方式
+        当数据库的字段名称与实体类属性名称不一致的时候：
+            1. 使用字段别名对应属性名称
+                使用 查询语句 的时候，为了和实体类进行映射，需要将数据库中常用的蛇形名称转换成为驼峰形名称
+                    settings 可以使用 mapUnderscoreToCameICase 开启驼峰命名自动映射
+            2.
+            3. resultMap 自定义映射 （resultType 只能映射一层结构）
+                <resultMap id="id" type="具体的返回值类型，全限定符或别名，集合类型写泛型">
+                    // id 为主键映射关系，映射的属性名称直接 #{属性名称} 进行使用
+                    <id column="主键名称" property="主键属性名称"/>
+                    <result column="" property=""/>
+                </resultMap>
         传入参数可分为两种：
             简单类型：基本数据类型，基本数据类型的包装类型，字符串类型
                 单个值传入的情景下，key 的名字可以随便取，都可以取到
@@ -19,27 +30,90 @@
             复杂类型：实体类类型，集合类型，数组类型
                 若传入单个实体类类型，在传值的位置直接使用属性名作为 key
                 若传入 Map，则指定 key 为 Map 的 key
+        返回参数类型使用 resultType 指定
+            resultType = 类的全限定符 或 别名名称( mybatis 定义或者自己定义)
+            常用别名：
+                基本数据类型：int double -> _int _double
+                包装数据类型：Integer Double -> integer double
+                集合容器类型：Map List HashMap -> map list hashmap
+            自定义别名:
+                <typeAliases>
+                    // 给类单独定义
+                    <typeAlias alias="别名" type="类的全路径"/>
+                    /** 包下所有类定义
+                     * 默认名称为 类名称的首字母小写
+                     * 可以在要特定别名的类之前使用 @Alias("别名")
+                     */
+                    <package name="包的路径"/>
+                </typeAliases>
+        如何在插入数据后获得主键：主键回显
+            详见下面的举例
      -->
 
+    <!--        传入参数         -->
     <!-- 单个简单数据传入获取员工信息 -->
     <select id="queryById" resultType="org.xueyinhu.ssm.pojo.Employee">
         select emp_id id,emp_name name,emp_salary salary from t_emp where emp_id=#{id}
     </select>
-
     <!-- 传入实体类对数据表进行添加 -->
     <!-- 返回值类型不需要指定，默认为 int -->
     <insert id="insertEmp">
         insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
     </insert>
-
     <!-- 零散简单数据传入获取员工信息 -->
     <!-- 返回值类型为实体类列表，但是 resultType 依然指定为实体类类型 -->
     <select id="queryNameAndSalary" resultType="org.xueyinhu.ssm.pojo.Employee">
         select emp_id id, emp_name name, emp_salary salary from t_emp where emp_name = #{A} and emp_salary = #{bb}
     </select>
-
     <!-- 传入 Map 对数据表进行添加 -->
     <insert id="insertEmpFromMap">
         insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
+    </insert>
+
+    <!--        返回参数         -->
+    <!-- 返回单个简单类型 -->
+    <!-- java.lang.String -->
+    <select id="queryNameById" resultType="string">
+        select emp_name from t_emp where emp_id = #{id};
+    </select>
+    <!-- 返回自定义类类型 -->
+    <select id="queryByName" resultType="org.xueyinhu.ssm.pojo.Employee">
+        select emp_id id, emp_name name, emp_salary salary from t_emp where emp_name = #{name}
+    </select>
+    <!-- 返回 map 类型 当没有实体类接值的时候，可以使用 map -->
+    <select id="selectEmpNameAndMaxSalary" resultType="map">
+        select emp_name 员工姓名, emp_salary 员工工资, (select avg(emp_salary) from t_emp) 部门平均工资
+        from t_emp where emp_salary = (select max(emp_salary) from t_emp)
+    </select>
+    <!-- 返回的集合类型 -->
+    <!-- todo 切记，若返回值为集合，resultType 不需要指定集合类型，只需要指定泛型类型
+        原因：底层 ibatis 中 selectOne 实际上调用了 selectList
+     -->
+    <select id="queryNameBySalary" resultType="string">
+        select emp_name from t_emp where emp_salary > #{salary};
+    </select>
+
+    <!-- 如何在插入数据后获得主键 -->
+    <!-- 自增主键回显，属性详解
+        useGeneratedKeys="true" 使用数据库自动增长的主键值
+        keyColumn="emp_id" 主键字段名称
+        keyProperty="id" 接到主键的属性名称
+    -->
+    <select id="insertEmpOther" useGeneratedKeys="true" keyColumn="emp_id" keyProperty="id">
+        insert into t_emp (emp_name, emp_salary) values (#{name}, #{salary});
+    </select>
+    <!-- 非自增主键回显 -->
+    <insert id="非自增主键进行维护">
+        <!-- selectKey
+            order=“BEFORE|AFTER” sql 语句在插入语句执行之前还是之后进行执行
+            resultType 返回值类型
+            keyProperty 赋值的属性名称
+         -->
+        <selectKey order="BEFORE" resultType="string" keyProperty="tId">
+            <!-- 在插入之前，先指定一段 sql 语句，用于生成主键值 -->
+            select replace(uuid(), '-', '')
+        </selectKey>
+        <!-- 插入语句，直接进行使用 -->
+        #{tId}
     </insert>
 </mapper>
