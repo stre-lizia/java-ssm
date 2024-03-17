@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xueyinhu.ssm.mapper.OrderMapper">
+
+    <!-- 多表查询 一对一 -->
+    <!-- 若使用 resultType="order" 则 Order 实体类中的 customer 属性不会被赋值 -->
+    <resultMap id="orderMap" type="order">
+        <!-- 自定义映射关系 -->
+        <!-- 主键 -->
+        <id column="order_id" property="orderId"/>
+        <!-- 普通列 -->
+        <result column="order_name" property="orderName"/>
+        <result column="customer_id" property="customerId"/>
+        <!-- 对象属性赋值 property=属性名称 javaType=对象类型 -->
+        <association property="customer" javaType="customer">
+            <id column="customer_id" property="customerId"/>
+            <result column="customer_name" property="customerName"/>
+        </association>
+    </resultMap>
+    <select id="queryOrderById" resultMap="orderMap">
+        select * from t_order tor join t_customer tur on tor.customer_id=tur.customer_id where tor.order_id = #{id};
+    </select>
+</mapper>

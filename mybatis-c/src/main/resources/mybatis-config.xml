@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="mapUnderscoreToCameICase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <package name="org.xueyinhu.ssm.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <!-- 允许多语句执行 allowMultiQueries=true -->
+                <property name="url" value="jdbc:mysql://localhost:3306/studb?serverTimezone=UTC?allowMultiQueries=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="password"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/EmployeeMapper.xml"/>
+        <!-- 批量指定
+         1. 要求包下 mapper 文件的命名必须和对应的接口名字一样
+         2. mapper.xml 与 接口文件 最终打包的位置一致
+            建议在 resource 目录下创建和接口文件一样的路径，也就是说 package name 指定的是共同的路径
+         -->
+        <package name="org.xueyinhu.ssm.mapper"/>
+    </mappers>
+</configuration>

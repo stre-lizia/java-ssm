@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.xueyinhu.ssm.mapper.EmployeeMapper">
+
+    <!-- 动态 SQL 语句
+     if 标签中的 test 属性对应的表达式若为 true 则对 sql 语句进行拼接
+        条件表达式使用 and 或 or 进行联合
+        老版本不建议直接写大于（小于），而是使用实体符号进行代替：&gt;(&lt)
+     where 标签内若不为空，则直接添加 "where"
+        若第一个满足而第二个不满足，则自动删除 “and”
+     -->
+    <select id="query" resultType="employee">
+        select * from t_emp
+        <where>
+            <if test="name != null">
+            emp_name = #{name}
+            </if>
+            <if test="salary != null and salary &gt; 100">
+            and emp_salary = #{salary};
+            </if>
+        </where>
+
+        <!-- trim 标签 可以代替 where 与 set 标签
+            prefix 自动添加的关键字
+            prefix 拼接时动态添加的前缀
+            sufflx 拼接时动态添加的后缀
+            prefixOverrides 拼接语句去除的前缀
+            suffixOverrides 拼接语句去除的后缀
+         -->
+<!--        <trim prefix="where" prefixOverrides="and|or" suffixOverrides="and|or">-->
+<!--            <if test="name != null">-->
+<!--                emp_name = #{name}-->
+<!--            </if>-->
+<!--            <if test="salary != null and salary &gt; 100">-->
+<!--                and emp_salary = #{salary};-->
+<!--            </if>-->
+<!--        <trim/>-->
+
+    </select>
+
+    <!-- 若 name 与 salary 都不为空则更新员工数据 -->
+    <!-- 自动添加 set 关键字 以及 去除语句中多余的逗号 -->
+    <update id="update">
+        update t_emp
+        <set>
+            <if test="name != null">
+                emp_name = #{name},
+            </if>
+            <if test="salary">
+                and emp_salary = #{salary}
+            </if>
+            where emp_id = #{id};
+        </set>
+    </update>
+
+    <!-- 条件判断选择 choose ... when ... otherwise ...
+        <choose>
+            <when test="true?">
+                要进行拼接的 sql 语句
+            </when>
+            ...
+            <otherwise>
+                1=1
+            </otherwise>
+        </choose>
+     -->
+
+    <!-- 循环
+            foreach collection="别名 | arg0 | list"
+            open 遍历之前要加的字符串
+            separator 分割符号
+            close 结束符号
+            item 获得的遍历项
+        example:
+        <foreach collection="ids" open="（" separator="," close=")" item="employee">
+           可以引用 item 指定的 key
+           类的属性使用：{#{employee.name}}
+           允许多语句执行 allowMultiQueries=true
+        </foreach>
+     -->
+
+</mapper>
