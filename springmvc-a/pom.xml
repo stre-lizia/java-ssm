@@ -11,6 +11,7 @@
     <modules>
         <module>project-a-handler_mapping</module>
         <module>project-b-params</module>
+        <module>project-c-return</module>
     </modules>
 
     <properties>
