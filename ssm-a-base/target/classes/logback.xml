@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="true">
+    <!-- 指定日志输出位置，此处设置位控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 日志输出格式 时间-日志级别-线程名称-打印日志的类-日志主体内容-换行 -->
+            <pattern>[%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger] [%msg]%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- 设置全日志最高级别，TRACE DEBUG INFO WARN ERROR -->
+    <root level="DEBUG">
+        <!-- 指定打印日志的 appender，这里通过 ref 引用了前面配置的 appender -->
+        <appender-ref ref="STDOUT" />
+    </root>
+    <!-- 根据特殊需求指定局部日志级别，可以是包名或全类名 -->
+    <logger name="org.xueyinhu.ssm.mybatis" level="DEBUG" />
+</configuration>
