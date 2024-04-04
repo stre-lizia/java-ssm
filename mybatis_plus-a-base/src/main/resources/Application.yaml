@@ -1,0 +1,17 @@
+spring:
+  dataSource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/studb
+      username: root
+      password: password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  type-aliases-package: org.xueyinhu.ssm.pojo
+#  global-config:
+#    db_config:
+#      table-prefix: t_ # 表名前缀，配合 @TableName 中的值寻找 表
+#      logic-delete-field: deleted # 每个表的逻辑删除字段
+#      logic-not-delete-value: 0
+#      logic-delete-value: 1
